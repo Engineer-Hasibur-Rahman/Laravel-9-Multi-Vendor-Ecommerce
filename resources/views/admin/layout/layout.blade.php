@@ -7,14 +7,10 @@
     <meta name="description" content="viho admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, viho admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ url('assets/admin/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ url('assets/admin/images/favicon.png') }}" type="image/x-icon">
     <title>Admin Template</title>
-    <!-- Google font-->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
     <!-- Font Awesome-->
     <link rel="stylesheet" type="text/css" href="{{ url('assets/admin/css/fontawesome.css') }}">
     <!-- ico-font-->
@@ -39,14 +35,15 @@
     <link id="color" rel="stylesheet" href="{{ url('assets/admin/css/color-1.css" media="screen') }}">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ url('assets/admin/css/responsive.css') }}">
+   
   </head>
   <body>
     <!-- Loader starts-->
-    {{-- <div class="loader-wrapper">
+  <div class="loader-wrapper">
       <div class="theme-loader">    
         <div class="loader-p"></div>
       </div>
-    </div> --}}
+    </div> 
     <!-- Loader ends-->
     <!-- page-wrapper Start       -->
     <div class="page-wrapper compact-wrapper" id="pageWrapper"> 
@@ -80,6 +77,10 @@
     <!-- Bootstrap js-->
     <script src="{{ url('assets/admin/js/bootstrap/popper.min.js') }}"></script>
     <script src="{{ url('assets/admin/js/bootstrap/bootstrap.min.js') }}"></script>
+
+   <!-- custome js file -->
+   <script src="{{ url('assets/admin/custome.js') }}"></script>  
+
     <!-- Plugins JS start-->
     <script src="{{ url('assets/admin/js/chart/chartist/chartist.js') }}"></script>
     <script src="{{ url('assets/admin/js/chart/chartist/chartist-plugin-tooltip.js') }}"></script>
@@ -106,12 +107,13 @@
     <script src="{{ url('assets/admin/js/notify/index.js') }}"></script>
     <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.js') }}"></script>
     <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.en.js') }}"></script>
-    <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.custom.js') }}"></script>
+    <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.custom.js') }}"></script> 
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ url('assets/admin/js/script.js') }}"></script>
     <script src="{{ url('assets/admin/js/theme-customizer/customizer.js') }}"></script>
     <!-- login js-->
-    <!-- Plugin used-->
+    <!-- Plugin used-->    
+ 
   </body>
 </html>

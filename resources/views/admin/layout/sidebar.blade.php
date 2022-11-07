@@ -9,10 +9,21 @@
               <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
             </li>
 
-            <li class="dropdown">
-              <a class="nav-link menu-title" href="javascript:void(0)">
+        
+              <li class="dropdown">
+              <a class="nav-link active" href="{{ url('admin/dashboard') }}">
                 <i data-feather="home"></i><span>Dashboard</span>
               </a>            
+            </li>                  
+
+            <li class="dropdown">
+              <a class="nav-link menu-title" href="javascript:void(0)">
+                <i data-feather="users"></i><span>Admin Settings</span>
+              </a>
+              <ul class="nav-submenu menu-content">                           
+                <li><a href="{{ url('admin/updatepassword') }}">Admin Profile</a></li> 
+                <li><a href="{{ url('admin/updatepassword') }}">Admin Update Password</a></li> 
+              </ul>
             </li>
 
             <li class="dropdown">

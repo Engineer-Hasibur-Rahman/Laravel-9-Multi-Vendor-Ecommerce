@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Hash;
+use Auth;
+use App\Models\Admin;
 
 class AdminController extends Controller
 {
@@ -12,20 +14,51 @@ class AdminController extends Controller
     public function AdminDashboard(){
         return view('admin.dashboard');
     }
-
-    // admi login 
-    public function login(Request $request){
-      
+    // admin login 
+    public function login(Request $request){      
+       $data = $request->all();
       if($request->isMethod('post')){    
         if(Auth::guard('admin')->attempt(['email' => $data['email'], 'password' =>$data['password'], 'status' =>1 ])){
-
+              return redirect('admin/dashboard');
         }else{
-
+          return redirect()->back()->with('error_message', 'Invalid Email or Password');
+        }
+      }      
+      return view('admin.auth.login');
+    }
+    // admin Logout 
+    public function logout(){
+      Auth::guard('admin')->logout();    
+      return redirect('admin/login');
+    }
+    // update admin Password
+    public function updateAdminPassword(Request $request){
+    if($request->isMethod('post')){
+      $data = $request->all();
+      // check if current passeord entered by admin is curret
+      if(Hash::check($data['current_password'], Auth::guard('admin')->user()->password)){
+      // check new password and confirm password
+        if($data['current_password']==$data['new_password']){
+          Admin::where('id', Auth::guard('admin')->user()->id)->update(['password'=>bcrypt($data['new_password'])]));
         }
 
-      } // main end if
+      }else{
+       return redirect()->back()->with('error_message', 'Your Current Password is Incorrect!');
+      }
+    }       
 
-      return view('admin.auth.login');
+      $update_password = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+      return view('admin.settings.update_password', compact('update_password'));
+    }
+
+    // admin password check 
+    public function checkAdminCurrentPassword(Request $request){
+      $data = $request->all();      
+      if(Hash::check($data['current_password'],Auth::guard('admin')->user()->password)){
+        return "true";
+      }else{
+        return "false";
+      }
     }
 
 }

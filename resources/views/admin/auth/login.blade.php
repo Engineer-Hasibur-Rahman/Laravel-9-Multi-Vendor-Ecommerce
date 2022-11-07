@@ -30,6 +30,7 @@
     <link id="color" rel="stylesheet" href="{{ url('assets/admin/css/color-1.css') }}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ url('assets/admin/css/responsive.css') }}">
+    <!--laravel notify message css -->  
   </head>
   <body>   
     <!-- page-wrapper Start-->
@@ -38,20 +39,40 @@
         <div class="row">
           <div class="col-12">
             <div class="login-card">
-              <form class="theme-form login-form">
+              <form class="theme-form login-form" action="{{ url('admin/login') }}" method="POST">
+                @csrf                
                 <h4>Login</h4>
                 <h6>Welcome back! Log in to your account.</h6>
+                @if(Session::has('error_message'))
+                <div class="alert alert-danger dark alert-dismissible fade show" role="alert">
+                  <strong>Error: </strong> {{ Session::get('error_message')}}
+                  <button class="btn-close" type="button" data-bs-dismiss="alert"
+                   aria-label="Close" data-bs-original-title="" title="">
+                  </button>
+                </div>
+                @endif
+
+                {{-- @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif --}}
+
                 <div class="form-group">
-                  <label>Email Address</label>
+                  <label>Email Address</label> 
                   <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
-                    <input class="form-control" type="email" required="" placeholder="Test@gmail.com">
+                    <input class="form-control" type="email" name="email" placeholder="email">
                   </div>
                 </div>
                 <div class="form-group">
                   <label>Password</label>
                   <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
-                    <input class="form-control" type="password" name="login[password]" required="" placeholder="*********">
-                    <div class="show-hide"><span class="show">                         </span></div>
+                    <input class="form-control" type="password" name="password" placeholder="*********">
+                    <div class="show-hide"><span class="show"> </span> </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -62,26 +83,14 @@
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary btn-block" type="submit">Sign in</button>
-                </div>
-                <div class="login-social-title">                
-                  <h5>Sign in with</h5>
-                </div>
-                <div class="form-group">
-                  <ul class="login-social">
-                    <li><a href="https://www.linkedin.com/login" target="_blank"><i data-feather="linkedin"></i></a></li>
-                    <li><a href="https://www.linkedin.com/login" target="_blank"><i data-feather="twitter"></i></a></li>
-                    <li><a href="https://www.linkedin.com/login" target="_blank"><i data-feather="facebook"></i></a></li>
-                    <li><a href="https://www.instagram.com/login" target="_blank"><i data-feather="instagram">                  </i></a></li>
-                  </ul>
-                </div>
-                <p>Don't have account?<a class="ms-2" href="log-in.html">Create Account</a></p>
+                </div>  
               </form>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- page-wrapper end-->
+    <!-- page-wrapper end-->    
     <!-- latest jquery-->
     <script src="{{ url('assets/admin//js/jquery-3.5.1.min.js') }}"></script>
     <!-- feather icon js-->
@@ -99,5 +108,7 @@
     <script src="{{ url('assets/admin//js/script.js') }}"></script>
     <!-- login js-->
     <!-- Plugin used-->
+   
+
   </body>
 </html>
