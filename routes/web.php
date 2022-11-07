@@ -26,7 +26,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     Route::get('logout', [AdminController::class, 'logout']);
 
     // admin dashboard
-  Route::group(['middleware' => ['admin'] ], function(){   
+  Route::group(['middleware' => ['admin'] ], function(){
   Route::get('dashboard', [AdminController::class, 'AdminDashboard']);
-    });   
+    });
 });

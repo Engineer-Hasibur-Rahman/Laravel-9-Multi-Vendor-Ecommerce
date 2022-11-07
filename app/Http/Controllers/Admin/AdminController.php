@@ -14,21 +14,21 @@ class AdminController extends Controller
     public function AdminDashboard(){
         return view('admin.dashboard');
     }
-    // admin login 
-    public function login(Request $request){      
+    // admin login
+    public function login(Request $request){
        $data = $request->all();
-      if($request->isMethod('post')){    
+      if($request->isMethod('post')){
         if(Auth::guard('admin')->attempt(['email' => $data['email'], 'password' =>$data['password'], 'status' =>1 ])){
               return redirect('admin/dashboard');
         }else{
           return redirect()->back()->with('error_message', 'Invalid Email or Password');
         }
-      }      
+      }
       return view('admin.auth.login');
     }
-    // admin Logout 
+    // admin Logout
     public function logout(){
-      Auth::guard('admin')->logout();    
+      Auth::guard('admin')->logout();
       return redirect('admin/login');
     }
     // update admin Password
@@ -38,22 +38,26 @@ class AdminController extends Controller
       // check if current passeord entered by admin is curret
       if(Hash::check($data['current_password'], Auth::guard('admin')->user()->password)){
       // check new password and confirm password
-        if($data['current_password']==$data['new_password']){
-          Admin::where('id', Auth::guard('admin')->user()->id)->update(['password'=>bcrypt($data['new_password'])]));
+        if($data['confirm_password']==$data['new_password']){
+          Admin::where('id', Auth::guard('admin')->user()->id)->update(['password'=>bcrypt($data['new_password'])]);
+
+            return redirect()->back()->with('success_message', 'Your Password Update Success');
+        }else{
+            return redirect()->back()->with('error_message', 'Your New Password & confirm password Not matching!!');
         }
 
       }else{
        return redirect()->back()->with('error_message', 'Your Current Password is Incorrect!');
       }
-    }       
+    }
 
       $update_password = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
       return view('admin.settings.update_password', compact('update_password'));
     }
 
-    // admin password check 
+    // admin password check
     public function checkAdminCurrentPassword(Request $request){
-      $data = $request->all();      
+      $data = $request->all();
       if(Hash::check($data['current_password'],Auth::guard('admin')->user()->password)){
         return "true";
       }else{

@@ -35,18 +35,31 @@
     <link id="color" rel="stylesheet" href="{{ url('assets/admin/css/color-1.css" media="screen') }}">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ url('assets/admin/css/responsive.css') }}">
-   
+
+
+      <!-- Toster message cdn lin start -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-
+     alpha/css/bootstrap.css" rel="stylesheet">
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <link rel="stylesheet" type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+      <!-- Toster message cdn lin End -->
+
   </head>
   <body>
     <!-- Loader starts-->
   <div class="loader-wrapper">
-      <div class="theme-loader">    
+      <div class="theme-loader">
         <div class="loader-p"></div>
       </div>
-    </div> 
+    </div>
     <!-- Loader ends-->
     <!-- page-wrapper Start       -->
-    <div class="page-wrapper compact-wrapper" id="pageWrapper"> 
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
 
       <!-- Page Header Ends-->
       @include('admin.layout.header')
@@ -79,7 +92,7 @@
     <script src="{{ url('assets/admin/js/bootstrap/bootstrap.min.js') }}"></script>
 
    <!-- custome js file -->
-   <script src="{{ url('assets/admin/custome.js') }}"></script>  
+   <script src="{{ url('assets/admin/custome.js') }}"></script>
 
     <!-- Plugins JS start-->
     <script src="{{ url('assets/admin/js/chart/chartist/chartist.js') }}"></script>
@@ -107,13 +120,15 @@
     <script src="{{ url('assets/admin/js/notify/index.js') }}"></script>
     <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.js') }}"></script>
     <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.en.js') }}"></script>
-    <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.custom.js') }}"></script> 
+    <script src="{{ url('assets/admin/js/datepicker/date-picker/datepicker.custom.js') }}"></script>
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ url('assets/admin/js/script.js') }}"></script>
     <script src="{{ url('assets/admin/js/theme-customizer/customizer.js') }}"></script>
     <!-- login js-->
-    <!-- Plugin used-->    
- 
+    <!-- Plugin used-->
+
+  <x-toastr-notifications />
+
   </body>
 </html>
