@@ -19,9 +19,10 @@ require __DIR__.'/auth.php';
 |----------------------------------------------------------------------*/
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
 
-    // [:admin login:] [:logout:] [:update password:] [:admin ajax password check:]
+    // [:admin login:] [:logout:] [:update password:] [:admin ajax password check:] [:admin info update:]
     Route::match(['get', 'post'], 'login', [AdminController::class, 'login']);
     Route::match(['get', 'post'], 'updatepassword', [AdminController::class, 'updateAdminPassword']);
+    Route::match(['get', 'post'], 'update-admin-details', [AdminController::class, 'updateAdminDetails']);
     Route::post('check-admin-password', [AdminController::class, 'checkAdminCurrentPassword']);
     Route::get('logout', [AdminController::class, 'logout']);
 

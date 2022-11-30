@@ -14,6 +14,8 @@ class AdminController extends Controller
     public function AdminDashboard(){
         return view('admin.dashboard');
     }
+
+
     // admin login
     public function login(Request $request){
        $data = $request->all();
@@ -26,11 +28,15 @@ class AdminController extends Controller
       }
       return view('admin.auth.login');
     }
+
+
     // admin Logout
     public function logout(){
       Auth::guard('admin')->logout();
       return redirect('admin/login');
     }
+
+
     // update admin Password
     public function updateAdminPassword(Request $request){
     if($request->isMethod('post')){
@@ -55,6 +61,7 @@ class AdminController extends Controller
       return view('admin.settings.update_password', compact('update_password'));
     }
 
+
     // admin password check
     public function checkAdminCurrentPassword(Request $request){
       $data = $request->all();
@@ -63,6 +70,30 @@ class AdminController extends Controller
       }else{
         return "false";
       }
+    }
+
+
+    // update admin details
+    public function updateAdminDetails(Request $request){   
+
+
+     if($request->isMethod('POST')){  
+        $data = $request->all();   
+       
+         // valadation   
+        $request->validate([
+           'name' => 'required',
+           'mobile' => 'required|numeric|min:10', 
+        ]);
+
+          Admin::where('id', Auth::guard('admin')->user()->id)->update([ 'email' => $data['email'],'name' => $data['name'], 'mobile' => $data['mobile'] ]);
+          return redirect()->back()->with('success_message', 'Admin Details Update successfully');
+     }
+
+
+
+        // $admin_details = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        return view('admin.profile.update-admin-details');
     }
 
 }
