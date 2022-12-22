@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Auth;
 use App\Models\Admin;
+use Image;
 
 class AdminController extends Controller
 {
@@ -76,9 +77,12 @@ class AdminController extends Controller
     // update admin details
     public function updateAdminDetails(Request $request){   
 
+  
 
      if($request->isMethod('POST')){  
-        $data = $request->all();   
+        $data = $request->all();  
+        
+   
        
          // valadation   
         $request->validate([
@@ -87,22 +91,28 @@ class AdminController extends Controller
            'mobile' => 'required|numeric|min:10', 
         ]);
 
-         //  // admin image update 
-         // if ($request->hash_file('admin_image')) {
-         //   $image_tmp = $request->file('admin_image');
-         //   if ($image_tmp->is_Valid()) {
-         //     // get image extension
-         //    $extension = $image_tmp->getClientOrignalExtension(){
-              
-         //      $image_name = rand(111,99999).'.'.$extension;
-         //      $image_path = 'admin/images/photo/'.$image_name;
+           // admin image update 
+        //  if ($request->hash_file('image')) {
+          
+        //    $image_tmp = $request->file('image');
+        //    if ($image_tmp->is_Valid()) {       
+        //     $extension = $image_tmp->getClientOrignalExtension();             
+        //       $image_name = rand(111,99999).'.'.$extension;     
+        //       $image_path = 'admin/images/photo/'.$image_name;    
+        //       Image::make($image_tmp)->save($image_path);
+        //    }
+        //  }
 
-         //      // img upload 
-         //      Image::make($image_tmp)->save($image_path);
+         if (request()->hasFile('image')){
+          $image = $request->file('image');
+          $imageName = time() . '.' . $image->getClientOriginalExtension();
+          $destinationPath = public_path('/admin/images/photo/');
+          $image->move($destinationPath, $imageName);
+          $image_main_path = $destinationPath . $imageName;
+          Image::make($imageName)->save($image_main_path);
+      }
 
-         //    }
-         //   }
-         // }
+
 
           Admin::where('id', Auth::guard('admin')->user()->id)->update([ 'email' => $data['email'],'name' => $data['name'], 'mobile' => $data['mobile'] ]);
           return redirect()->back()->with('success_message', 'Admin Details Update successfully');

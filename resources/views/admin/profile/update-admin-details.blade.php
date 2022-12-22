@@ -21,7 +21,7 @@
                                           </div>
                                       @endif
 
-                                <form class="theme-form" action="{{ url('admin/update-admin-details') }}" method="POST">
+                                <form class="theme-form" action="{{ url('admin/update-admin-details') }}" method="POST" enctype="multipart/form-data" >
                                     @csrf
                                     @if(Session::has('error_message'))
                                         <div class="alert alert-danger dark alert-dismissible fade show" role="alert">
@@ -54,6 +54,11 @@
                                     <div class="mb-3">
                                         <label class="col-form-label pt-0" for="mobile">Admin Mobile</label>
                                         <input class="form-control" id="mobile" type="text" name="mobile" value="{{ Auth::guard('admin')->user()->mobile }}" mixlenth="11" minlenth="11">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="col-form-label pt-0" for="image">Admin image</label>
+                                        <input class="form-control" id="image" type="file" name="image">
                                     </div>
 
 

@@ -11,7 +11,7 @@
                         <h5>Password Update</h5>
                       </div>
                       <div class="card-body">
-                        <form class="theme-form" action="{{ url('admin/updatepassword') }}" method="POST">
+                        <form class="theme-form" action="{{ url('admin/updatepassword') }}" method="POST"  >
                             @csrf
 
                             @if(Session::has('error_message'))
