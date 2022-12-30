@@ -75,35 +75,17 @@ class AdminController extends Controller
 
 
     // update admin details
-    public function updateAdminDetails(Request $request){   
-
-  
+    public function updateAdminDetails(Request $request){     
 
      if($request->isMethod('POST')){  
-        $data = $request->all();  
-        
-   
-       
+        $data = $request->all();         
          // valadation   
         $request->validate([
            'name' => 'required',
            'email'=>'required',
            'mobile' => 'required|numeric|min:10', 
-        ]);
-
-           // admin image update 
-        //  if ($request->hash_file('image')) {
-          
-        //    $image_tmp = $request->file('image');
-        //    if ($image_tmp->is_Valid()) {       
-        //     $extension = $image_tmp->getClientOrignalExtension();             
-        //       $image_name = rand(111,99999).'.'.$extension;     
-        //       $image_path = 'admin/images/photo/'.$image_name;    
-        //       Image::make($image_tmp)->save($image_path);
-        //    }
-        //  }
-
-         if (request()->hasFile('image')){
+        ]);   
+              
           $image = $request->file('image');
           $imageName = time() . '.' . $image->getClientOriginalExtension();
           $destinationPath = public_path('/admin/images/photo/');
@@ -112,14 +94,10 @@ class AdminController extends Controller
           Image::make($imageName)->save($image_main_path);
       }
 
-
-
           Admin::where('id', Auth::guard('admin')->user()->id)->update([ 'email' => $data['email'],'name' => $data['name'], 'mobile' => $data['mobile'] ]);
           return redirect()->back()->with('success_message', 'Admin Details Update successfully');
-     }
-
-        // $admin_details = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
-        return view('admin.profile.update-admin-details');
-    }
+          return view('admin.profile.update-admin-details');
+     }      
+    
 
 }
