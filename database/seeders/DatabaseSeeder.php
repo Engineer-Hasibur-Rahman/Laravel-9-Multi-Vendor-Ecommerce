@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(AdminTableSeeder::class);
+        $this->call(VendorTableSeeder::class);
 
     }
 }

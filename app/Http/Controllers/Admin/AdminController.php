@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Hash;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Models\Admin;
 use Image;
@@ -77,27 +78,32 @@ class AdminController extends Controller
     // update admin details
     public function updateAdminDetails(Request $request){     
 
+        
      if($request->isMethod('POST')){  
-        $data = $request->all();         
+      $data = $request->all();       
          // valadation   
         $request->validate([
            'name' => 'required',
            'email'=>'required',
            'mobile' => 'required|numeric|min:10', 
-        ]);   
-              
-          $image = $request->file('image');
-          $imageName = time() . '.' . $image->getClientOriginalExtension();
-          $destinationPath = public_path('/admin/images/photo/');
-          $image->move($destinationPath, $imageName);
-          $image_main_path = $destinationPath . $imageName;
-          Image::make($imageName)->save($image_main_path);
-      }
+        ]);        
 
-          Admin::where('id', Auth::guard('admin')->user()->id)->update([ 'email' => $data['email'],'name' => $data['name'], 'mobile' => $data['mobile'] ]);
+   $existingimages = Admin::where('id', Auth::guard('admin')->user()->id)->select('image')->first();    
+
+    if ($request->file('image')) {  
+      $file = $request->file('image');
+      $filename = date('YmdHi').$file->getClientOriginalName();
+      $file->move(public_path('admin/images/photo/'),$filename);
+      $data['image'] = $filename;
+  }
+
+
+          Admin::where('id', Auth::guard('admin')->user()->id)->update(['email' => $data['email'],'name' => $data['name'], 'mobile' => $data['mobile'] ]);
           return redirect()->back()->with('success_message', 'Admin Details Update successfully');
-          return view('admin.profile.update-admin-details');
-     }      
-    
+      }       
+  
+
+        return view('admin.profile.update-admin-details');
+    }
 
 }

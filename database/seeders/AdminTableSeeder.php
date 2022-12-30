@@ -18,12 +18,12 @@ class AdminTableSeeder extends Seeder
     {
         // admin seeder data add 
     $admin_records =[          
-            'id' =>1,
-            'vendor_id' => 0,
-            'name' => 'Super Admin',
-            'type' => 'superadmin',
+            'id' =>3,
+            'vendor_id' => 2,
+            'name' => 'Test vendor',
+            'type' => 'vendor',
             'mobile' => '01784677515',
-            'email' => 'super@gmail.com',
+            'email' => 'v3@gmail.com2',
             'password' => Hash::make('12345678'),
             'image' => '',
             'status' => '1',
