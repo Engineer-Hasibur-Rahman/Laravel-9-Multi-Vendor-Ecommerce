@@ -9,5 +9,15 @@ class Vendor extends Model
 {
     use HasFactory;
 
-    // protected $guard = [];
+    protected $fileable = [
+        'name',
+        'email',
+        'phone',
+        'mobile',
+        'address',
+        'country',
+        'city',
+        'state',
+        'status',
+    ];
 }

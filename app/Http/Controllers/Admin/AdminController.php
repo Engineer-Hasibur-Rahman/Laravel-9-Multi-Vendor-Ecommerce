@@ -8,6 +8,7 @@ use Hash;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Models\Admin;
+use App\Models\Vendor;
 use Image;
 
 class AdminController extends Controller
@@ -76,9 +77,8 @@ class AdminController extends Controller
 
 
     // update admin details
-    public function updateAdminDetails(Request $request){     
+    public function updateAdminDetails(Request $request){  
 
-        
      if($request->isMethod('POST')){  
       $data = $request->all();       
          // valadation   
@@ -104,6 +104,55 @@ class AdminController extends Controller
   
 
         return view('admin.profile.update-admin-details');
+    }
+
+    // vendor details update
+    public function updateVendorDetails(Request $request, $slug){
+
+        if($slug == 'personal'){         
+          if($request->isMethod('POST')){  
+            $data = $request->all();  
+              // valadation   
+              $request->validate([
+                'name' => 'required',
+                'email'=>'required',              
+                'mobile' => 'required|numeric|min:10', 
+              ]); 
+           $existingimages = Admin::where('id', Auth::guard('admin')->user()->id)->select('image')->first(); 
+          if ($request->file('image')) {  
+            $file = $request->file('image');
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('admin/images/photo/'),$filename);
+            $data['image'] = $filename;
+         }
+          Admin::where('id', Auth::guard('admin')->user()->id)
+          ->update([
+          'email' => $data['email'],
+          'name' => $data['name'], 
+          'mobile' => $data['mobile'],                
+        ]);
+
+          Vendor::where('id', Auth::guard('admin')->user()->id)
+          ->update([
+            'email' => $data['email'],
+            'name' => $data['name'], 
+            'mobile' => $data['mobile'], 
+            'address' => $data['address'], 
+            'country' => $data['country'], 
+            'city' => $data['city'], 
+            'state' => $data['state'], 
+            'pincode' => $data['pincode'] 
+           ]);
+        
+          return redirect()->back()->with('success_message', 'Admin Details Update successfully');
+        }     
+
+        }elseif($slug == 'busniess'){
+
+        }elseif($slug == 'bank'){
+          
+        }
+        return view('admin.profile.update-vendor-details', compact('slug'));
     }
 
 }

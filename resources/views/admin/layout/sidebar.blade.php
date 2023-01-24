@@ -15,8 +15,19 @@
                 <i data-feather="home"></i><span>Dashboard</span>
               </a>
             </li>
-
-            <li class="dropdown">
+         @if (Auth::guard('admin')->user()->type == 'vendor')
+         <li class="dropdown">
+              <a class="nav-link menu-title" href="javascript:void(0)">
+                <i data-feather="users"></i><span>Vendor Details</span>
+              </a>
+              <ul class="nav-submenu menu-content">
+                <li><a href="{{ url('admin/update-vendor-details/personal') }}"> Personal Details</a></li>
+                <li><a href="{{ url('admin/update-vendor-details/business') }}"> Business Details </a></li>
+                <li><a href="{{ url('admin/update-vendor-details/bank') }}"> Bank Details </a></li>
+              </ul>
+            </li>
+         @else
+         <li class="dropdown">
               <a class="nav-link menu-title" href="javascript:void(0)">
                 <i data-feather="users"></i><span>Admin Settings</span>
               </a>
@@ -37,6 +48,8 @@
                 <li><a href="index.html">All User</a></li>
               </ul>
             </li>
+         @endif
+            
 
           </ul>
         </div>
