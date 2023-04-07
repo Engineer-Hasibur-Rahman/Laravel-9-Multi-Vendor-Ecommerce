@@ -1,77 +1,109 @@
-<div class="page-main-header">
-        <div class="main-header-right row m-0">
-          <div class="main-header-left">
-            <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="{{ url('assets/admin/images/logo/logo.png') }}" alt=""></a></div>
-            <div class="dark-logo-wrapper"><a href="index.html"><img class="img-fluid" src="{{ url('assets/admin/images/logo/dark-logo.png') }}" alt=""></a></div>
-            <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="align-center" id="sidebar-toggle"></i></div>
-          </div>
-          <div class="left-menu-header col">
-            <ul>
-              <li>
-                <form class="form-inline search-form">
-                  <div class="search-bg"><i class="fa fa-search"></i>
-                    <input class="form-control-plaintext" placeholder="Search here.....">
-                  </div>
-                </form><span class="d-sm-none mobile-search search-bg"><i class="fa fa-search"></i></span>
-              </li>
-            </ul>
-          </div>
-          <div class="nav-right col pull-right right-menu p-0">
-            <ul class="nav-menus">
-              <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
-              <li class="onhover-dropdown">
-                <div class="bookmark-box"><i data-feather="star"></i></div>
-                <div class="bookmark-dropdown onhover-show-div">
-                  <div class="form-group mb-0">
-                    <div class="input-group">
-                      <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div>
-                      <input class="form-control" type="text" placeholder="Search for bookmark...">
-                    </div>
-                  </div>
-                  <ul class="m-t-5">
-                    <li class="add-to-bookmark"><i class="bookmark-icon" data-feather="inbox"></i>Email<span class="pull-right"><i data-feather="star"></i></span></li>
-                
-                  </ul>
-                </div>
-              </li>
-              <li class="onhover-dropdown">
-                <div class="notification-box"><i data-feather="bell"></i><span class="dot-animated"></span></div>
-                <ul class="notification-dropdown onhover-show-div">
-                  <li>
-                    <p class="f-w-700 mb-0">You have 3 Notifications<span class="pull-right badge badge-primary badge-pill">4</span></p>
+<header class='mb-3'>
+  <nav class="navbar navbar-expand navbar-light navbar-top" style="background-color: #b8bac5">
+      <div class="container-fluid">
+          <a href="#" class="burger-btn d-block">
+              <i class="bi bi-justify fs-3"></i>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mb-lg-0">
+                  <li class="nav-item dropdown me-1">
+                      <a class="nav-link active dropdown-toggle text-gray-600" href="#" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <i class='bi bi-envelope bi-sub fs-4'></i>
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                          <li>
+                              <h6 class="dropdown-header">Mail</h6>
+                          </li>
+                          <li><a class="dropdown-item" href="#">No new mail</a></li>
+                      </ul>
                   </li>
-                  <li class="noti-primary">
-                    <div class="media"><span class="notification-bg bg-light-primary"><i data-feather="activity"> </i></span>
-                      <div class="media-body">
-                        <p>Delivery processing </p><span>10 minutes ago</span>
+                  <li class="nav-item dropdown me-3">
+                      <a class="nav-link active dropdown-toggle text-gray-600" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                          <i class='bi bi-bell bi-sub fs-4'></i>
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="dropdownMenuButton">
+                          <li class="dropdown-header">
+                              <h6>Notifications</h6>
+                          </li>
+                          <li class="dropdown-item notification-item">
+                              <a class="d-flex align-items-center" href="#">
+                                  <div class="notification-icon bg-primary">
+                                      <i class="bi bi-cart-check"></i>
+                                  </div>
+                                  <div class="notification-text ms-4">
+                                      <p class="notification-title font-bold">Successfully check out</p>
+                                      <p class="notification-subtitle font-thin text-sm">Order ID #256</p>
+                                  </div>
+                              </a>
+                          </li>
+                          <li class="dropdown-item notification-item">
+                              <a class="d-flex align-items-center" href="#">
+                                  <div class="notification-icon bg-success">
+                                      <i class="bi bi-file-earmark-check"></i>
+                                  </div>
+                                  <div class="notification-text ms-4">
+                                      <p class="notification-title font-bold">Homework submitted</p>
+                                      <p class="notification-subtitle font-thin text-sm">Algebra math homework</p>
+                                  </div>
+                              </a>
+                          </li>
+                          <li>
+                              <p class="text-center py-2 mb-0"><a href="#">See all notification</a></p>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+              <div class="dropdown">
+                  <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                      <div class="user-menu d-flex">
+                          <div class="user-name text-end me-3">
+                              <h6 class="mb-0 text-gray-600">
+                                 
+                                 @if(Illuminate\Support\Facades\Auth::guard('admin')->user()->type == 'superadmin')
+                                         {{ Illuminate\Support\Facades\Auth::guard('admin')->user()->name }}
+                                 @endif 
+
+                                 @if(Illuminate\Support\Facades\Auth::guard('admin')->user()->type == 'admin')
+                                         {{ Illuminate\Support\Facades\Auth::guard('admin')->user()->name }}
+                                 @endif
+
+                                  @if(Illuminate\Support\Facades\Auth::guard('admin')->user()->type == 'vendor')
+                                         {{ Illuminate\Support\Facades\Auth::guard('admin')->user()->name }}
+                                 @endif                              
+
+                              </h6>
+
+                          </div>
+                          <div class="user-img d-flex align-items-center">
+                              <div class="avatar avatar-md">
+                                  <img src="assets/images/faces/1.jpg">
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                  </li>                  
-                </ul>
-              </li>
-              <li>
-                <div class="mode"><i class="fa fa-moon-o"></i></div>
-              </li>
-              <li class="onhover-dropdown"><i data-feather="message-square"></i>
-                <ul class="chat-dropdown onhover-show-div">
-                  <li>
-                    <div class="media"><img class="img-fluid rounded-circle me-3" src="../assets/images/user/4.jpg" alt="">
-                      <div class="media-body"><span>Ain Chavez</span>
-                        <p class="f-12 light-font">Lorem Ipsum is simply dummy...</p>
-                      </div>
-                      <p class="f-12">32 mins ago</p>
-                    </div>
-                  </li>                
-                  <li class="text-center"> <a class="f-w-700" href="javascript:void(0)">See All     </a></li>
-                </ul>
-              </li>
-              <li class="onhover-dropdown p-0">
-                <button class="btn btn-primary-light" type="button">
-                  <a href="{{ url('admin/logout') }}"><i data-feather="log-out"></i>Log out</a>
-                </button>
-              </li>
-            </ul>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
+                      <li>
+                          <h6 class="dropdown-header"></h6>
+                      </li>
+                      <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="icon-mid bi bi-person me-2"></i> My
+                              Profile</a></li>
+                      <li><a class="dropdown-item" href="{{ url('admin/updatepassword') }}"><i class="icon-mid bi bi-gear me-2"></i>
+                              Password Change</a></li>
+                      <li>
+                          <hr class="dropdown-divider">
+                      </li>
+                      <li><a class="dropdown-item" href="{{ route('admin.logout') }}"><i
+                                  class="icon-mid bi bi-box-arrow-left me-2"></i>  Logout</a></li>
+                  </ul>
+              </div>
           </div>
-          <div class="d-lg-none mobile-toggle pull-right w-auto"><i data-feather="more-horizontal"></i></div>
-        </div>
       </div>
+  </nav>
+</header>

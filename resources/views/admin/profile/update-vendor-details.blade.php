@@ -14,8 +14,7 @@
                             <h5>Update Business Details</h5>
                             @elseif($slug == 'bank')
                             <h5>Update Bank Details</h5>
-                            @endif
-                            
+                            @endif                            
                             </div>
                             <div class="card-body">
                                       @if ($errors->any())
@@ -28,7 +27,7 @@
                                           </div>
                                       @endif
 
-                                  @if($slug == 'personal')
+                                  @if($slug == 'personal')                       
                                   <form class="theme-form" action="{{ url('admin/update-vendor-details/personal') }}" method="POST" enctype="multipart/form-data" >
                                     @csrf
                                     @if(Session::has('error_message'))
@@ -51,18 +50,44 @@
 
                                     <div class="mb-3">
                                         <label class="col-form-label pt-0" for="name">Name</label>
-                                        <input class="form-control" id="name" type="text" name="name" value="{{ Auth::guard('admin')->user()->name }}">
+                                        <input class="form-control" id="name" type="text" name="name" value="{{ $vendorDetails->name }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="col-form-label pt-0" for="email">Email address</label>
-                                        <input class="form-control" id="email" type="email" name="email" value="{{ Auth::guard('admin')->user()->email }}">
+                                        <input class="form-control" id="email" type="email" name="email" value="{{ $vendorDetails->email }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="col-form-label pt-0" for="mobile">Mobile</label>
-                                        <input class="form-control" id="mobile" type="text" name="mobile" value="{{ Auth::guard('admin')->user()->mobile }}" mixlenth="11" minlenth="11">
+                                        <input class="form-control" id="mobile" type="text" name="mobile" value="{{ $vendorDetails->mobile }}">
                                     </div>
+
+                                  <div class="mb-3">
+                                        <label class="col-form-label pt-0" for="Country">Address</label>
+                                        <input class="form-control" id="address" type="text" name="address" value="{{ $vendorDetails->address }}" mixlenth="11" minlenth="11">
+                                    </div>
+
+                                   <div class="mb-3">
+                                        <label class="col-form-label pt-0" for="Country">Country</label>
+                                        <input class="form-control" id="country" type="text" name="country" value="{{ $vendorDetails->country }}">
+                                    </div>
+
+                                      <div class="mb-3">
+                                        <label class="col-form-label pt-0" for="city">City</label>
+                                        <input class="form-control" id="city" type="text" name="city" value="{{ $vendorDetails->city }}">
+                                    </div>
+
+                                     <div class="mb-3">
+                                        <label class="col-form-label pt-0" for="area">state</label>
+                                        <input class="form-control" id="state" type="text" name="state" value="{{ $vendorDetails->state }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="col-form-label pt-0" for="pincode">pincode</label>
+                                        <input class="form-control" id="pincode" type="text" name="pincode" value="{{ $vendorDetails->pincode }}">
+                                    </div>
+
 
                                     <div class="mb-3">
                                         <label class="col-form-label pt-0" for="image">image</label>
@@ -70,9 +95,12 @@
                                     </div>
 
 
-                                    <div class="card-footer">
-                                        <button class="btn btn-success-gradien" type="submit" >Update</button>
+                                     <div class="row">
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                                
+                                        </div>
                                     </div>
+
                                 </form>
 
                                   @elseif($slug == 'business')    
@@ -97,18 +125,18 @@
                                     @endif
 
                                     <div class="mb-3">
-                                        <label class="col-form-label pt-0" for="name">Name</label>
-                                        <input class="form-control" id="name" type="text" name="name" value="{{ Auth::guard('admin')->user()->name }}">
+                                        <label class="col-form-label pt-0" for="shop_code">Code</label>
+                                        <input class="form-control" id="shop_code" type="text" name="shop_code" value="{{ $vendorDetails->shop_code }}">
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="col-form-label pt-0" for="email">Email address</label>
-                                        <input class="form-control" id="email" type="email" name="email" value="{{ Auth::guard('admin')->user()->email }}">
+                                        <label class="col-form-label pt-0" for="shop_name">Name</label>
+                                        <input class="form-control" id="shop_name" type="shop_name" name="shop_name" value="{{ $vendorDetails->shop_name }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="col-form-label pt-0" for="mobile">Mobile</label>
-                                        <input class="form-control" id="mobile" type="text" name="mobile" value="{{ Auth::guard('admin')->user()->mobile }}" mixlenth="11" minlenth="11">
+                                        <input class="form-control" id="mobile" type="text" name="mobile" value="{{ $vendorDetails->shop_address }}">
                                     </div>
 
                                     <div class="mb-3">
@@ -117,10 +145,15 @@
                                     </div>
 
 
-                                    <div class="card-footer">
-                                        <button class="btn btn-success-gradien" type="submit" >Update</button>
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                                
+                                        </div>
                                     </div>
+
                                 </form>
+
+
                                   @elseif($slug == 'bank')   
                                   <form class="theme-form" action="{{ url('admin/update-vendor-details') }}" method="POST" enctype="multipart/form-data" >
                                     @csrf
@@ -163,9 +196,12 @@
                                     </div>
 
 
-                                    <div class="card-footer">
-                                        <button class="btn btn-success-gradien" type="submit" >Update</button>
+                                   <div class="row">
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                                
+                                        </div>
                                     </div>
+
                                 </form> 
                                   @endif    
                                 

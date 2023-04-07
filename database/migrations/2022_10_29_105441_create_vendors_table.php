@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('mobile');
             $table->string('address')->nullable();
-            $table->string('country');
-            $table->string('city');
-            $table->string('state');
+            $table->string('country_id');
+            $table->intger('city_id');
+            $table->string('state_id');
             $table->string('pincode');
             $table->tinyInteger('status')->default('0');
             $table->timestamps();

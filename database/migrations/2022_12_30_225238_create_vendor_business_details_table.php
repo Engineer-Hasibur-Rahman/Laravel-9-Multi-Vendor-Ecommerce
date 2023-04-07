@@ -16,16 +16,16 @@ return new class extends Migration
         Schema::create('vendor_business_details', function (Blueprint $table) {
             $table->id();
             $table->biginteger('vendor_id');
-            $table->string('shop_code')->unique();
-            $table->string('shop_name')->nullable();
-            $table->string('shop_address')->nullable();
-            $table->string('shop_city')->nullable();
-            $table->string('shop_state')->nullable();
-            $table->string('shop_country')->nullable();
-            $table->string('shop_pincode')->nullable();
-            $table->string('shop_mobile')->nullable();
-            $table->string('shop_website')->nullable();
-            $table->string('shop_email')->nullable()->unique();
+            $table->string('vendor_code')->unique();
+            $table->string('vendor_name')->nullable();
+            $table->string('vendor_address')->nullable();
+            $table->string('vendor_city')->nullable();
+            $table->string('vendor_state')->nullable();
+            $table->string('vendor_country')->nullable();
+            $table->string('vendor_pincode')->nullable();
+            $table->string('vendor_mobile')->nullable();
+            $table->string('vendor_website')->nullable();
+            $table->string('vendor_email')->nullable()->unique();
             $table->string('address_proof')->nullable();
             $table->string('address_proof_image')->nullable();
             $table->string('business_lincese_number')->nullable();

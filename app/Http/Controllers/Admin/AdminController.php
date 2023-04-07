@@ -8,23 +8,29 @@ use Hash;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Models\Admin;
-use App\Models\Vendor;
+use App\Models\Vendor; 
+use App\Models\User; 
+use App\Models\VendorBankDetail; 
+use App\Models\VendorBusinessDetails; 
 use Image;
 
 class AdminController extends Controller
-{
+{ 
+
     //admin Dashboard page
     public function AdminDashboard(){
-        return view('admin.dashboard');
+
+        $users = User::all()->count(); 
+
+        return view('admin.dashboard', compact('users'));
     }
-
-
     // admin login
     public function login(Request $request){
        $data = $request->all();
       if($request->isMethod('post')){
         if(Auth::guard('admin')->attempt(['email' => $data['email'], 'password' =>$data['password'], 'status' =>1 ])){
               return redirect('admin/dashboard');
+
         }else{
           return redirect()->back()->with('error_message', 'Invalid Email or Password');
         }
@@ -88,14 +94,14 @@ class AdminController extends Controller
            'mobile' => 'required|numeric|min:10', 
         ]);        
 
-   $existingimages = Admin::where('id', Auth::guard('admin')->user()->id)->select('image')->first();    
+   $existingimages = Admin::where('id', Auth::guard('admin')->user()->id)->select('image')->first();   
 
-    if ($request->file('image')) {  
-      $file = $request->file('image');
-      $filename = date('YmdHi').$file->getClientOriginalName();
-      $file->move(public_path('admin/images/photo/'),$filename);
-      $data['image'] = $filename;
-  }
+      if ($request->file('image')) {  
+        $file = $request->file('image');
+        $filename = date('YmdHi').$file->getClientOriginalName();
+        $file->move(public_path('admin/images/photo/'),$filename);
+        $data['image'] = $filename;
+    }
 
 
           Admin::where('id', Auth::guard('admin')->user()->id)->update(['email' => $data['email'],'name' => $data['name'], 'mobile' => $data['mobile'] ]);
@@ -108,16 +114,17 @@ class AdminController extends Controller
 
     // vendor details update
     public function updateVendorDetails(Request $request, $slug){
-
         if($slug == 'personal'){         
+           $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first();
           if($request->isMethod('POST')){  
             $data = $request->all();  
-              // valadation   
+       
               $request->validate([
                 'name' => 'required',
                 'email'=>'required',              
                 'mobile' => 'required|numeric|min:10', 
               ]); 
+
            $existingimages = Admin::where('id', Auth::guard('admin')->user()->id)->select('image')->first(); 
           if ($request->file('image')) {  
             $file = $request->file('image');
@@ -125,12 +132,7 @@ class AdminController extends Controller
             $file->move(public_path('admin/images/photo/'),$filename);
             $data['image'] = $filename;
          }
-          Admin::where('id', Auth::guard('admin')->user()->id)
-          ->update([
-          'email' => $data['email'],
-          'name' => $data['name'], 
-          'mobile' => $data['mobile'],                
-        ]);
+          
 
           Vendor::where('id', Auth::guard('admin')->user()->id)
           ->update([
@@ -147,12 +149,21 @@ class AdminController extends Controller
           return redirect()->back()->with('success_message', 'Admin Details Update successfully');
         }     
 
-        }elseif($slug == 'busniess'){
+        }elseif($slug == 'business'){
+          $vendorDetails = VendorBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first();   
 
         }elseif($slug == 'bank'){
-          
+          $vendorDetails = VendorBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id->first()->toArray());
         }
-        return view('admin.profile.update-vendor-details', compact('slug'));
+
+        return view('admin.profile.update-vendor-details', compact('slug','vendorDetails'));
     }
+
+    //  public function logout(){      
+    //     Session::flush();        
+    //     Auth::logout();
+    //     return redirect('/admin/login');
+    // }
+
 
 }
