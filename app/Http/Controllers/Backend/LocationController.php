@@ -185,35 +185,33 @@ class LocationController extends Controller
     
     public function update_country(Request $request)
     {
-       dd($request->name);
-
+    
+     
         $request->validate([
-            'name'=> 'required|max:191|unique:countries,country,'.$request->id,
-        ]);
-
-        $country_find = Country::findOrFail($request->id);
-
-        if($country_find){
-            $country =  Country::where('id',$request->id)->update([
+            'name'=> 'required|max:191|unique:countries,name,'.$request->id,
+        ]);       
+       
+            $country_id =  Country::where('id',$request->id)->update([
                 'name'=>$request->name,
-            ]);
+            ]);   
+
+            $country = Country::find($country_id);     
 
             return response()->json([         
                 'status' => 200,
                 'message' => 'Country Update Success',
                 'country' =>  $country,
-            ]);
-
-        }else{
-            return response()->json([         
-                'status' => 404,
-                'message' => 'Country not found',                
-            ]);
-        }       
-
-       
+            ]);       
     }
 
+    public function delete_country($id)
+    {    
+        Country::find($id)->delete();        
+        return response()->json([         
+            'status' => 200,
+            'message' => 'Country Delete Successfully' ,           
+        ]);        
+    }
 
     public function change_status_country($id)
     {
@@ -221,13 +219,7 @@ class LocationController extends Controller
         $country->status==1 ? $status=0 : $status=1;
         Country::where('id',$id)->update(['status'=>$status]);
         return redirect()->back()->with(FlashMsg::item_new(' Status Change Success'));
-    }
-
-    public function delete_country($id)
-    {
-        Country::find($id)->delete();
-        return redirect()->back()->with(FlashMsg::item_new(' Country Deleted Success'));
-    }
+    }  
 
     public function bulk_action_country(Request $request){
         Country::whereIn('id',$request->ids)->delete();

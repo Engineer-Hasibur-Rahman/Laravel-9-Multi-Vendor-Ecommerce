@@ -40,9 +40,9 @@ Route::prefix('/admin')->group(function(){
               Route::match(['get','post'],'/add', [LocationController::class, 'add_country'])->name('admin.country.add');
               Route::get('/edit-country/{id?}',[LocationController::class, 'edit_country'])->name('admin.country.edit');
               Route::post('/edit-update',[LocationController::class, 'update_country'])->name('admin.country.update');
+              Route::post('/delete/{id?}',[LocationController::class, 'delete_country'])->name('admin.country.delete');
               
-              Route::post('/change-status/{id}',[LocationController::class, 'change_status_country'])->name('admin.country.status');
-              Route::post('/delete/{id}',[LocationController::class, 'delete_country'])->name('admin.country.delete');
+              Route::post('/change-status/{id}',[LocationController::class, 'change_status_country'])->name('admin.country.status');             
               Route::post('/bulk-action', [LocationController::class, 'bulk_action_country'])->name('admin.country.bulk.action');
 
               Route::get('/csv/import','ImportCsvController@import_settings')->name('admin.import.csv.settings');
